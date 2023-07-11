@@ -1,0 +1,191 @@
+{% load static %}
+
+<html>
+
+<head>
+    <style>
+    body {
+        background: linear-gradient(to bottom, #B2DFEE, #FFFFFF);
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .navbar {
+        background-color: #2E5984;
+        overflow: hidden;
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-top: 10px;
+    }
+
+    .navbar a {
+        float: left;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+
+    }
+
+    .dropdown {
+        float: left;
+        overflow: hidden;
+    }
+
+    .dropdown .dropbtn {
+        font-size: 17px;
+        border: none;
+        outline: none;
+        color: white;
+        padding: 14px 16px;
+        background-color: inherit;
+        font-family: inherit;
+        margin: 0;
+    }
+
+    .navbar a:hover,
+    .dropdown:hover .dropbtn {
+        background-color: #ddd;
+        color: black;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        float: none;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .center-align {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 10vh;
+    }
+
+    .centered-text {
+        text-align: center;
+    }
+
+    .button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: black;
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .button:hover {
+        background-color: #9ac5dd;
+    }
+
+    #submissions {
+        border-collapse: collapse;
+        width: 50%;
+        margin: auto;
+        border: 2px solid #2E5984;
+        margin-top: 30px;
+    }
+
+    #submissions td,
+    #submissions th {
+        border: 2px solid white;
+        padding: 8px;
+        text-align: center;
+    }
+
+    #submissions tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #submissions tr:hover {
+        background-color: #ddd;
+    }
+
+    #submissions th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: center;
+        background-color: #2E5984;
+        color: white;
+    }
+    .text{
+      display: inline-block;
+      text-decoration: none;
+      color: black;
+    }
+    .text :hover{
+      color: white;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="{% url 'index' %}">Home</a>
+        <div class="dropdown">
+            <button class="dropbtn">Problemset
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="{% url 'list_problems' %}">View Problems</a>
+                <!-- Add more dropdown items if needed -->
+            </div>
+        </div>
+    </div>
+    <div class="center-align">
+        <h1 class="centered-text">Recent Submissions</h1>
+    </div>
+    <!-- <div class="center-align">
+        <a href="{% url 'list_problems' %}" class="button">Return to Problemset</a>
+    </div> -->
+    <div>
+        <table id="submissions">
+            <thead>
+                <tr>
+                    <th>Verdict</th>
+                    <th>Problem</th>
+                    <th>Submitted At</th>
+                    <th>Submitted By</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for res in result %}
+                <tr>
+                    <td>{{res.verdict}}</td>
+                    <td><a class="text" href="{% url 'detail' res.problem.id %}">{{res.problem.code}}</a></td>
+                    <td>{{res.submittedAt}}</td>
+                    <td>{{res.submittedBy}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

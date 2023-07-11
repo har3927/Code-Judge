@@ -1,0 +1,222 @@
+<html>
+<head>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #B2DFEE, #FFFFFF);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .working-btn {
+            background-color: #ddd;
+            border: none;
+            color: black;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition: 0.3s;
+            border-radius: 4px;
+        }
+
+        .working-btn:hover {
+            background-color: black;
+            color: grey;
+        }
+
+        textarea {
+            margin-top: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 20px;
+        }
+
+        .problem-info {
+            width: 45%;
+        }
+
+        .code-section {
+            width: 50%;
+            text-align: center;
+        }
+
+        h2 {
+            font-weight: bold;
+        }
+
+        h3 {
+            font-weight: normal;
+        }
+
+        .navbar {
+            background-color: #2E5984;
+            overflow: hidden;
+            margin-top: 10px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        .navbar a {
+            float: left;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .dropdown {
+            float: left;
+            overflow: hidden;
+        }
+
+        .dropdown .dropbtn {
+            font-size: 16px;
+            border: none;
+            outline: none;
+            color: white;
+            padding: 14px 16px;
+            background-color: inherit;
+            font-family: inherit;
+            margin: 0;
+        }
+
+        .navbar a:hover,
+        .dropdown:hover .dropbtn {
+            background-color: #ddd;
+            color: #271F1F;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            float: none;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .submit-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .submit-btn {
+            background-color: #2E5984;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            color:black;
+        }
+
+        /* Updated styling for select element */
+        select {
+            padding: 8px;
+            font-size: 14px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            color: #444;
+            width: 20%;
+            box-sizing: border-box;
+        }
+
+        /* Style select dropdown arrow */
+        select::-ms-expand {
+            display: none;
+        }
+
+        select option {
+            font-size: 14px;
+        }
+
+        /* Styling for label */
+        label {
+            display: block;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+  <div class="navbar">
+      <a href="{% url 'index' %}">Home</a>
+      <div class="dropdown">
+          <button class="dropbtn">Menu
+              <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+              <a href="{% url 'list_problems' %}">Problem Set</a>
+              <a href="{% url 'leaderboard' %}">Submissions</a>
+          </div>
+      </div>
+  </div>
+
+<div class="container">
+    <div class="problem-info">
+        <h2>{{ problem.name }}</h2>
+        <h3>{{ problem.statement }}</h3>
+
+        <h2>Sample Input</h2>
+        {{ io.input }}
+
+        <h2 style="margin-top:25px">Sample Output</h2>
+        {{ io.output }}
+    </div>
+    <!-- <div class="">
+<! Display problem details -->
+
+    <div class="code-section">
+        {% if request.user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="question_id" value="{{ problem.id }}">
+            <label for="language">Language:</label>
+            <select id="language" name="language">
+                <option value="cpp">C++</option>
+                <option value="python">Python</option>
+                <option value="java">Java</option>
+            </select>
+            <br>
+            <!-- <label for="code" style="color: #007bff;">Code:</label> -->
+            <textarea id="code" name="code" rows="20" cols="80" placeholder="Type your code here..."></textarea>
+            <br>
+            <div class="submit-container">
+                <button type="submit" class="submit-btn">Submit</button>
+            </div>
+        </form>
+        {% else %}
+        <h2 align='center'>Login to Submit Your Code</h2>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>

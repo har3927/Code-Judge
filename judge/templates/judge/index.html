@@ -1,0 +1,147 @@
+{% load static %}
+<html>
+
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    body {
+      /* background: linear-gradient(to bottom, #B2DFEE, #FFFFFF); */
+      background: linear-gradient(to bottom, #B2DFEE, #FFFFFF);
+      padding: 20px;
+    }
+
+    .center-align {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .centered-text {
+      font-size: 28px;
+      font-weight: bold;
+      margin-top: 50px;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
+    }
+
+    .button-container .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #2E5984;
+      color: #FFF;
+      text-decoration: none;
+      font-size: 16px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .button-container .button:hover {
+      color: black;
+    }
+
+    .navbar {
+      background-color: #2E5984; /* Change the background color */
+      padding: 10px 0;
+    }
+
+    .navbar-brand,
+    .navbar-link {
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+      margin-right: 15px;
+    }
+
+    .navbar-link:hover {
+      color: #fff;
+    }
+
+    .dropdown-menu {
+      font-size: 17px;
+      border: none;
+      outline: none;
+      color: black;
+      padding: 14px 16px;
+      background-color: inherit;
+      font-family: inherit;
+      margin: 0;
+    }
+
+    .dropdown-item {
+      color: black;
+      text-decoration: none;
+      background-color: #f9f9f9; /* Change the background color to a darker shade of blue */
+      border-radius: 10px;
+
+      }
+
+    .dropdown-item:hover {
+      background-color: #ddd; /* Change the hover background color to a darker shade of blue */
+      color:black;
+    }
+
+    .right-align {
+      text-align: right;
+    }
+  </style>
+</head>
+
+<body>
+  {% if messages %}
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        {% for message in messages %}
+        <p id="messages">{{message}}</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <nav class="navbar">
+    <div class="container">
+      <div class="dropdown">
+        <a class="navbar-link dropdown-toggle" href="#" role="button" id="menuDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Menu <i class="fa fa-caret-down"></i>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="menuDropdown">
+          <a class="dropdown-item" href="{% url 'list_problems' %}">Problem Set</a>
+          <a class="dropdown-item" href="{% url 'leaderboard' %}">Submissions</a>
+        </div>
+      </div>
+      <div class="right-align">
+        <div class="dropdown">
+          <a class="navbar-link dropdown-toggle" href="#" role="button" id="accountDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Account <i class="bi bi-caret-down"></i>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="accountDropdown">
+            {% if request.user.is_authenticated %}
+            <a class="dropdown-item" href="{% url 'users:logout' %}" >Log Out</a>
+            {% else %}
+            <a class="dropdown-item" href="{% url 'users:login' %}" >Log In</a>
+            <a class="dropdown-item" href="{% url 'users:register' %}" >Register</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="center-align">
+    <h1 class="centered-text">Welcome to the Code Judge</h1>
+  </div>
+  <div class="button-container">
+    <a href="{% url 'list_problems' %}" class="button">Click here to Practice</a>
+  </div>
+
+
+</body>
+
+</html>
